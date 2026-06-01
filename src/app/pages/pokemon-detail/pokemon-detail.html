@@ -1,0 +1,78 @@
+<button class="btn-volver" (click)="volver()">← Volver</button>
+ 
+@if (cargando()) {
+  <div class="estado cargando"><p>Cargando datos...</p></div>
+}
+ 
+@if (error()) {
+  <div class="estado error">
+    <p>⚠️ {{ error() }}</p>
+    <button class="btn-volver" style="margin-top:1rem" (click)="volver()">← Volver a la lista</button>
+  </div>
+}
+ 
+@if (pokemon()) {
+  <!-- @entradaDetalle: anima la entrada del panel completo -->
+  <div class="detalle" @entradaDetalle>
+ 
+    <div class="header">
+      <img
+        [src]="pokemon()!.sprites.other['official-artwork'].front_default"
+        [alt]="pokemon()!.name"
+        class="sprite-hd"
+        loading="lazy"
+      />
+      <div class="info">
+        <h1>{{ pokemon()!.name | titlecase }}</h1>
+        <p class="poke-id">#{{ pokemon()!.id }}</p>
+        <div class="types">
+          @for (t of pokemon()!.types; track t.slot) {
+            <span class="badge" [ngClass]="t.type.name">{{ t.type.name }}</span>
+          }
+        </div>
+      </div>
+    </div>
+ 
+    <!-- @entradaStats: anima cada .stat-row en cascada con stagger -->
+    <div class="stats" @entradaStats>
+      <h2>Estadísticas base</h2>
+      @for (stat of pokemon()!.stats; track stat.stat.name) {
+        <div class="stat-row">
+          <span class="stat-name">{{ stat.stat.name }}</span>
+          <div class="bar-bg">
+            <div class="bar-fill" [style.width.%]="statPercent(stat.base_stat)"></div>
+          </div>
+          <span class="stat-val">{{ stat.base_stat }}</span>
+        </div>
+      }
+    </div>
+ 
+    <div class="datos-fisicos">
+      <div class="dato">
+        <span class="label">Altura</span>
+        <span class="val">{{ pokemon()!.height / 10 }} m</span>
+      </div>
+      <div class="dato">
+        <span class="label">Peso</span>
+        <span class="val">{{ pokemon()!.weight / 10 }} kg</span>
+      </div>
+      <div class="dato">
+        <span class="label">Exp. base</span>
+        <span class="val">{{ pokemon()!.base_experience }}</span>
+      </div>
+    </div>
+ 
+    <div class="habilidades">
+      <h2>Habilidades</h2>
+      <div class="hab-list">
+        @for (a of pokemon()!.abilities; track a.ability.name) {
+          <span class="hab-badge" [class.hidden]="a.is_hidden">
+            {{ a.ability.name }}
+            @if (a.is_hidden) { <em>(oculta)</em> }
+          </span>
+        }
+      </div>
+    </div>
+ 
+  </div>
+}

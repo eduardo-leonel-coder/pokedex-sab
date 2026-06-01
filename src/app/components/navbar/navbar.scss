@@ -1,0 +1,23 @@
+$rojo: #CC0000;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background: $rojo;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+
+  .logo { font-size: 1.4rem; font-weight: 700; }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    transition: background .2s;
+    &:hover { background: rgba(255,255,255,.2); }
+  }
+}

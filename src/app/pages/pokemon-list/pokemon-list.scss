@@ -1,0 +1,141 @@
+$rojo:  #CC0000;
+$azul:  #1565C0;
+$radio: 12px;
+ 
+:host { display: block; padding: 1.5rem; }
+ 
+// ── BUSCADOR ─────────────────────────────────────────────────────────
+.buscador-wrapper {
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+}
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 999px;
+  padding: .5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: border-color .2s;
+  &:focus-within { border-color: $rojo; }
+}
+.icono-busqueda { font-size: 1rem; flex-shrink: 0; }
+.input-busqueda {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: .95rem;
+  background: transparent;
+  color: #333;
+  &::placeholder { color: #aaa; }
+}
+.btn-limpiar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 .2rem;
+  &:hover { color: $rojo; }
+}
+ 
+// ── ESTADOS ──────────────────────────────────────────────────────────
+.estado {
+  text-align: center;
+  padding: 3rem 1rem;
+  border-radius: $radio;
+  margin: 1rem auto;
+  max-width: 500px;
+  .error-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+  &.error { color: $rojo; background: #FFEBEE; }
+  &.vacio { color: #607D8B; font-style: italic; background: #f5f5f5; }
+}
+.btn-retry {
+  margin-top: 1rem;
+  padding: .5rem 1.5rem;
+  border: 2px solid $rojo;
+  border-radius: 8px;
+  background: #fff;
+  color: $rojo;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover { background: $rojo; color: #fff; }
+}
+ 
+// ── GRID ─────────────────────────────────────────────────────────────
+.grid-wrapper {
+  transition: opacity .3s;
+  &.recargando { opacity: .45; pointer-events: none; }
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+ 
+// ── SKELETON LOADER ──────────────────────────────────────────────────
+.card-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.25rem 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  gap: .75rem;
+}
+.sk {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f8fafc 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+.sk-img   { width: 120px; height: 120px; border-radius: 50%; }
+.sk-title { width: 80%;  height: 14px; }
+.sk-badge { width: 50%;  height: 22px; border-radius: 999px; }
+ 
+@keyframes shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+ 
+// ── PAGINACION ───────────────────────────────────────────────────────
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.btn-pagina {
+  width: 38px; height: 38px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: .9rem; font-weight: 600; color: #555;
+  transition: all .2s;
+  &:hover:not(:disabled)  { border-color: $rojo; color: $rojo; }
+  &.activa { background: $rojo; color: #fff; border-color: $rojo; }
+  &:disabled { opacity: .35; cursor: not-allowed; }
+}
+.btn-nav {
+  width: 38px; height: 38px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.2rem; font-weight: 700; color: #555;
+  transition: all .2s;
+  &:hover:not(:disabled) { border-color: $rojo; color: $rojo; }
+  &:disabled { opacity: .35; cursor: not-allowed; }
+}
+.puntos {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  color: #999; font-weight: 700;
+}

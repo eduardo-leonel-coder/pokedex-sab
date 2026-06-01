@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* Reset y tipografía global */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* Colores de tipos de pokémon — usados con [ngClass] */
+.fire     { background: #F08030; color: #fff; }
+.water    { background: #6890F0; color: #fff; }
+.grass    { background: #78C850; color: #fff; }
+.electric { background: #F8D030; color: #333; }
+.psychic  { background: #F85888; color: #fff; }
+.normal   { background: #A8A878; color: #fff; }
+.poison   { background: #A040A0; color: #fff; }
+.bug      { background: #A8B820; color: #fff; }
+.rock     { background: #B8A038; color: #fff; }
+.ground   { background: #E0C068; color: #333; }
+.flying   { background: #A890F0; color: #fff; }
+.ghost    { background: #705898; color: #fff; }
+.ice      { background: #98D8D8; color: #333; }
+.dragon   { background: #7038F8; color: #fff; }
+.dark     { background: #705848; color: #fff; }
+.steel    { background: #B8B8D0; color: #333; }
+.fairy    { background: #EE99AC; color: #333; }
+.fighting { background: #C03028; color: #fff; }

@@ -1,0 +1,99 @@
+<div class="buscador-wrapper">
+  <div class="buscador">
+    <span class="icono-busqueda">🔍</span>
+    <input
+      type="search"
+      placeholder="Buscar pokemon en esta pagina..."
+      [formControl]="busqueda"
+      class="input-busqueda"
+   />
+    @if (busqueda.value.length > 0) {
+      <button class="btn-limpiar" (click)="busqueda.reset()" title="Limpiar">clas</button>
+    }
+  </div>
+</div>
+ 
+<!-- ─── SKELETON LOADER (estado cargando sin datos previos) ─────────── -->
+@if (cargando() && pokemons().length === 0) {
+  <div class="grid">
+    @for (i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]; track i) {
+      <div class="card-skeleton">
+        <div class="sk sk-img"></div>
+        <div class="sk sk-title"></div>
+        <div class="sk sk-badge"></div>
+      </div>
+    }
+  </div>
+}
+ 
+<!-- ─── ERROR ───────────────────────────────────────────────────────── -->
+@if (error()) {
+  <div class="estado error">
+    <p class="error-icon">⚠️</p>
+    <p>{{ error() }}</p>
+    <button class="btn-retry" (click)="cargarPokemons()">🔄 Reintentar</button>
+  </div>
+}
+ 
+<!-- ─── VACIO (sin datos reales) ─────────────────────────────────────── -->
+@if (!cargando() && !error() && pokemons().length === 0) {
+  <div class="estado vacio">
+    <p>😶 No se encontraron pokémons.</p>
+  </div>
+}
+ 
+<!-- ─── GRID (datos disponibles) ─────────────────────────────────────── -->
+@if (pokemons().length > 0) {
+ 
+  <!-- Overlay semi-transparente al recargar una nueva pagina -->
+  <div class="grid-wrapper" [class.recargando]="cargando()">
+    <div class="grid">
+      @for (pokemon of pokemonsFiltrados(); track pokemon.name) {
+        <app-pokemon-card
+          [name]="pokemon.name"
+          [id]="getId(pokemon.url)"
+          [spriteUrl]="getSprite(pokemon.url)"
+          [types]="[]"
+        ></app-pokemon-card>
+      }
+    </div>
+  </div>
+ 
+  <!-- Empty state cuando el filtro no tiene resultados -->
+  @if (pokemonsFiltrados().length === 0 && busqueda.value.length > 0) {
+    <div class="estado vacio">
+      <p>🔎 No hay pokemon que coincida con "{{ busqueda.value }}"</p>
+      <button class="btn-retry" (click)="busqueda.reset()">Limpiar filtro</button>
+    </div>
+  }
+ 
+  <!-- ─── PAGINACION ──────────────────────────────────────────────── -->
+  <div class="paginacion">
+    <button class="btn-nav" (click)="irAPagina(paginaActual() - 1)"
+            [disabled]="paginaActual() === 1 || cargando()">‹</button>
+ 
+    @if (paginas()[0] > 1) {
+      <button class="btn-pagina" (click)="irAPagina(1)">1</button>
+      @if (paginas()[0] > 2) { <span class="puntos">…</span> }
+    }
+ 
+    @for (p of paginas(); track p) {
+      <button class="btn-pagina"
+              [class.activa]="p === paginaActual()"
+              [disabled]="cargando()"
+              (click)="irAPagina(p)">{{ p }}</button>
+    }
+ 
+    @if (paginas()[paginas().length - 1] < totalPaginas()) {
+      @if (paginas()[paginas().length - 1] < totalPaginas() - 1) {
+        <span class="puntos">…</span>
+      }
+      <button class="btn-pagina"
+              [disabled]="cargando()"
+              (click)="irAPagina(totalPaginas())">{{ totalPaginas() }}</button>
+    }
+ 
+    <button class="btn-nav" (click)="irAPagina(paginaActual() + 1)"
+            [disabled]="paginaActual() === totalPaginas() || cargando()">›</button>
+  </div>
+}
