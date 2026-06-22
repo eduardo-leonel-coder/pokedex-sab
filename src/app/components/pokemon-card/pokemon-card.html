@@ -1,10 +1,24 @@
-<a @entradaTarjeta [routerLink]="['/pokemons', name]" class="card">
-    <span class="poke-id">#{{id}}</span>
-    <img [src]="spriteUrl" [alt]="name" class="sprite" loading="eager" (error)="onImgError($event)">
-    <h3 class="poke-name"> {{ name }}</h3>
+<a @entradaTarjeta [routerLink]="['/pokemons', name()]" class="card">
+    <span class="poke-id">#{{ id() }}</span>
+    <img [src]="spriteUrl()" [alt]="name()" class="sprite" loading="eager" (error)="onImgError($event)">
+    <h3 class="poke-name"> {{ name() }}</h3>
     <div class="types">
-        @for (tipo of types; track tipo) {
-            <span class="badge" [ngClass]="tipo">{{tipo}}</span>
+        @for (tipo of types(); track tipo) {
+            <span class="badge" [ngClass]="tipo">{{ tipo }}</span>
         }
     </div>
 </a>
+
+<!-- <button 
+class="btn-fav"
+[class.activo]="esFavorito()"
+(click)="marcarFavorito()">
+⭐ Favorito
+</button> -->
+
+<button 
+class="btn-fav"
+[class.activo]="esFavorito()"
+(click)="alternarFavorito()">
+{{ esFavorito() ? "⭐ Favorito" : "☆ Marcar" }}
+</button>

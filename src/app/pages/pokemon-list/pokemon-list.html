@@ -54,6 +54,8 @@
           [id]="getId(pokemon.url)"
           [spriteUrl]="getSprite(pokemon.url)"
           [types]="[]"
+          [esFavorito]="esFavorito(getId(pokemon.url))"
+          (esFavoritoChange)="onFavorito(getId(pokemon.url))"
         ></app-pokemon-card>
       }
     </div>

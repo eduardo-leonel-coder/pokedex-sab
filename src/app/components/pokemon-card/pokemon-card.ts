@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, output, model, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {
@@ -10,6 +10,7 @@ import {
 
 @Component({
   selector: 'app-pokemon-card',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, NgClass],
   templateUrl: './pokemon-card.html',
   styleUrl: './pokemon-card.scss',
@@ -35,14 +36,34 @@ import {
 
 
 export class PokemonCard {
-  @Input() name: string = '';
-  @Input() spriteUrl: string = '';
-  @Input() types: string[] = [];
-  @Input() id: number = 0;
+  // Default version vieja de Angular
+  // @Input() name: string = '';
+  // @Input() spriteUrl: string = '';
+  // @Input() types: string[] = [];
+  // @Input() id: number = 0;
 
-  onImgError(event: Event): void {
+  // OnPush version nueva de Angular
+  name = input.required<string>();
+  spriteUrl = input.required<string>();
+  id = input.required<number>();
+
+  types = input<string[]>([]);
+
+  esFavorito = model<boolean>(false);
+  favorito = output<number>();
+
+  marcarFavorito(): void {
+    this.favorito.emit(this.id())
+  }
+
+  alternarFavorito():void {
+    this.esFavorito.set(!this.esFavorito())
+  }
+
+
+    onImgError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    const spriteNormal = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id}.png`;
+    const spriteNormal = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id()}.png`;
     
     if (img.src !== spriteNormal){
       img.src = spriteNormal

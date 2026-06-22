@@ -27,6 +27,9 @@ export class PokemonList implements OnInit, OnDestroy {
   error        = signal('');
   paginaActual = signal(1);
   totalCount   = signal(0);
+  favoritos    = signal<Set<number>>(new Set());
+ 
+
   readonly limit = 24;
  
   busqueda = new FormControl('', { nonNullable: true });
@@ -99,6 +102,24 @@ export class PokemonList implements OnInit, OnDestroy {
     this.cargarPokemons();
   }
  
+  // onFavorito(id: number):void {
+  //   console.log('POkemon marcado como favorito:', id)
+  // }
+
+  onFavorito(id: number):void {
+    const actuales = new Set(this.favoritos());
+    if (actuales.has(id)) {
+      actuales.delete(id);
+    }else {
+      actuales.add(id)
+    }
+    this.favoritos.set(actuales)
+  }
+
+  esFavorito(id: number): boolean {
+    return this.favoritos().has(id);
+  }
+
   getId(url: string):     number { return this.pokemonService.getIdFromUrl(url); }
   getSprite(url: string): string { return this.pokemonService.getSpriteUrl(url); }
 }

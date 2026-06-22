@@ -56,3 +56,41 @@
   font-weight: 700;
   text-transform: capitalize;
 }
+
+//* ===== Botón Favorito (Tema 4 - output) - versión didáctica ===== */
+.btn-fav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  background: #008000;
+  color: #4a3b00;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-fav:hover {
+  background: #FF0000;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-fav:active {
+  transform: scale(0.95);
+}
+
+.btn-fav.activo {
+  background: #F28500;
+  color: #4a3b00;
+  box-shadow: 0 2px 8px rgba(255, 180, 0, 0.5);
+}
