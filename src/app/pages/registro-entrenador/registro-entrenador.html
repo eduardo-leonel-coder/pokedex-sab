@@ -1,0 +1,106 @@
+<br/>
+
+<div class="registro-wrapper">
+    <h1>Registro de Entrenador</h1>
+    <br/>
+
+    <!-- <form (submit)="$event.preventDefault()" novalidate> -->
+    <form (submit)="onSubmit($event)" novalidate>
+        <!-- <label>
+            Nombre
+            <input type="text" [formField]="formulario.nombre">
+        </label> -->
+
+        <label>
+            Nombre
+            <input type="text" [formField]="formulario.nombre">
+            @if (formulario.nombre().touched() && formulario.nombre().invalid()){
+                <ul class="errores">
+                    @for(error of formulario.nombre().errors(); track error.kind){
+                        <li>{{error.message}}</li>
+                    }
+                </ul>
+            }
+        </label>
+
+        <!-- <label>
+            Email
+            <input type="text" [formField]="formulario.email">
+        </label> -->
+
+         <label>
+            Email
+            <input type="text" [formField]="formulario.email">
+            @if (formulario.email().touched() && formulario.email().invalid()){
+                <ul class="errores">
+                    @for(error of formulario.email().errors(); track error.kind){
+                        <li>{{error.message}}</li>
+                    }
+                </ul>
+            }
+        </label>
+
+        <!-- <label>
+            Pokemon favorito
+            <input type="text" [formField]="formulario.pokemonFavorito">
+        </label> -->
+
+        <label>
+            Pokemon favorito
+            <input type="text" [formField]="formulario.pokemonFavorito">
+            @if(formulario.pokemonFavorito().pending()){
+                <span class="verificando">Verificando en la PokeAPI...</span>
+            }
+            @if (formulario.pokemonFavorito().touched() && formulario.pokemonFavorito().invalid()){
+                <ul class="errores">
+                    @for(error of formulario.pokemonFavorito().errors(); track error.kind){
+                        <li>{{error.message}}</li>
+                    }
+                </ul>
+            }
+        </label>
+
+        <label>
+            Tipo de entrenador
+            <select [formField]="formulario.tipo">
+                <option value="novato">Novato</option>
+                <option value="lider">Lider de Gimnasio</option>
+            </select>
+        </label>
+
+        <!-- <label>
+            Gimnasio
+            <input type="text" [formField]="formulario.gimnasio">
+        </label> -->
+
+        <label>
+            Gimnasio
+            <input type="text" [formField]="formulario.gimnasio">
+            @if (formulario.gimnasio().touched() && formulario.gimnasio().invalid()){
+                <ul class="errores">
+                    @for(error of formulario.gimnasio().errors(); track error.kind){
+                        <li>{{error.message}}</li>
+                    }
+                </ul>
+            }
+        </label>
+        
+        <!-- <button type="submit">Registrar</button> -->
+         <button type="submit"
+         [disabled]="formulario().invalid() || formulario().submitting()">
+         @if (formulario().submitting()) {Registrando....} @else {Registrar}
+        </button>
+    </form>
+
+    <!-- panel de debug:  -->
+     <br>
+     <h3>Panel de Debug</h3>
+    <aside class="debug">
+        <p><strong>value:</strong>{{ formulario().value() | json}}</p>
+        <p><strong>valid:</strong>{{ formulario().valid() }}</p>
+        <p><strong>touched:</strong>{{ formulario().touched() }}</p>
+         <p><strong>dirty:</strong>{{ formulario().dirty() }}</p>
+          <p><strong>nombre.touched:</strong>{{ formulario.nombre().touched() }}</p>
+          <p><strong>nombre.dirty:</strong>{{ formulario.nombre().dirty() }}</p>
+    </aside>
+</div>
