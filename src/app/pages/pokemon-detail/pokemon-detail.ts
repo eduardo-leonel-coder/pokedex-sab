@@ -1,6 +1,6 @@
 import {
   Component, OnInit,
-  inject, signal, PLATFORM_ID
+  inject, signal, PLATFORM_ID, DestroyRef
 } from '@angular/core';
 import { isPlatformBrowser }  from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,10 @@ import {
   query,
   stagger
 } from '@angular/animations';
- 
+import { switchMap } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'; 
+import { __param } from 'tslib';
+
 @Component({
   selector:    'app-pokemon-detail',
   imports:     [NgClass, TitleCasePipe],
@@ -54,16 +57,37 @@ export class PokemonDetail implements OnInit {
   private router         = inject(Router);
   private pokemonService = inject(PokemonService);
   private platformId     = inject(PLATFORM_ID);
+  private destroyRef     = inject(DestroyRef);
  
   pokemon  = signal<PokemonInterface | null>(null);
   cargando = signal(false);
   error    = signal('');
  
+  // ngOnInit(): void {
+  //   const name = this.route.snapshot.paramMap.get('name');
+  //   if (name) this.cargarDetalle(name);
+  // }
+ 
   ngOnInit(): void {
-    const name = this.route.snapshot.paramMap.get('name');
-    if (name) this.cargarDetalle(name);
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const name = params.get('name')!;
+        this.cargando.set(true);
+        this.error.set('');
+        return this.pokemonService.getPokemon(name);
+      }),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
+      next: (data) => {this.pokemon.set(data); this.cargando.set(false); },
+      error: (err) => {
+        this.error.set(err?.mensajeUsuario ?? "No se enconetro el pokemon.");
+        this.cargando.set(false)
+      }
+
+    })
   }
  
+  
   cargarDetalle(name: string): void {
     this.cargando.set(true);
     this.error.set('');

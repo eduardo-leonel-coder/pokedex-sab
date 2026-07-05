@@ -1,11 +1,12 @@
 import {
   Component, OnInit, OnDestroy,
-  inject, signal, computed, PLATFORM_ID
+  inject, signal, computed, linkedSignal, PLATFORM_ID
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { isPlatformBrowser }  from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Subscription }       from 'rxjs';
+import { debounce, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+// import { Subscription }       from 'rxjs';
 import { PokemonService }     from '../../services/pokemon.service';
 import { PokemonListItem }    from '../../interfaces/pokemon.interface';
 import { PokemonCard }        from '../../components/pokemon-card/pokemon-card';
@@ -16,11 +17,11 @@ import { PokemonCard }        from '../../components/pokemon-card/pokemon-card';
   templateUrl: './pokemon-list.html',
   styleUrl:    './pokemon-list.scss'
 })
-export class PokemonList implements OnInit, OnDestroy {
+export class PokemonList {
  
   private pokemonService = inject(PokemonService);
   private platformId     = inject(PLATFORM_ID);
-  private sub?: Subscription;
+  // private sub?: Subscription;
  
   pokemons     = signal<PokemonListItem[]>([]);
   cargando     = signal(false);
@@ -35,8 +36,18 @@ export class PokemonList implements OnInit, OnDestroy {
   busqueda = new FormControl('', { nonNullable: true });
 
   // Signal puente — computed() solo reacciona a Signals, no a FormControl
-  busquedaSignal = signal('');
+  // busquedaSignal = signal('');
  
+  busquedaSignal = toSignal(
+    this.busqueda.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ),
+    {initialValue: ''}
+  )
+
+  tiposPorId = signal<Map<number, string []>>(new Map());
+
   pokemonsFiltrados = computed(() => {
     const filtro = this.busquedaSignal().toLowerCase().trim();
     if (!filtro) return this.pokemons();
@@ -58,20 +69,26 @@ export class PokemonList implements OnInit, OnDestroy {
     return Array.from({ length: fin - inicio + 1 }, (_, i) => inicio + i);
   });
  
-  ngOnInit(): void {
+  destacado = linkedSignal(() => this.pokemonsFiltrados()[0] ?? null);
+
+  constructor(){
     this.cargarPokemons();
- 
-    this.sub = this.busqueda.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(valor => {
-      this.busquedaSignal.set(valor); // actualiza la Signal → dispara computed()
-    });
   }
+
+  // ngOnInit(): void {
+  //   this.cargarPokemons();
  
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
+  //   this.sub = this.busqueda.valueChanges.pipe(
+  //     debounceTime(300),
+  //     distinctUntilChanged()
+  //   ).subscribe(valor => {
+  //     this.busquedaSignal.set(valor); // actualiza la Signal → dispara computed()
+  //   });
+  // }
+ 
+  // ngOnDestroy(): void {
+  //   this.sub?.unsubscribe();
+  // }
  
   cargarPokemons(): void {
     this.cargando.set(true);
@@ -86,6 +103,14 @@ export class PokemonList implements OnInit, OnDestroy {
         if (isPlatformBrowser(this.platformId)) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        this.pokemonService.getTiposDeLista(data.results).subscribe(tipos => {
+          const mapa = new Map<number, string[]>();
+          for(const t of tipos){
+            mapa.set(t.id, t.types);
+          }
+          this.tiposPorId.set(mapa);
+        })
       },
       error: (err) => {
         this.error.set(err?.mensajeUsuario ?? 'No se pudo conectar a la PokeAPI.');
@@ -97,11 +122,16 @@ export class PokemonList implements OnInit, OnDestroy {
   irAPagina(p: number): void {
     if (p < 1 || p > this.totalPaginas() || p === this.paginaActual()) return;
     this.busqueda.reset();
-    this.busquedaSignal.set(''); // sincronizar al limpiar
+    //this.busquedaSignal.set(''); // sincronizar al limpiar
     this.paginaActual.set(p);
     this.cargarPokemons();
   }
  
+  elegirDestacado(p: PokemonListItem): void {
+    this.destacado.set(p);
+  }
+
+
   // onFavorito(id: number):void {
   //   console.log('POkemon marcado como favorito:', id)
   // }
@@ -122,4 +152,9 @@ export class PokemonList implements OnInit, OnDestroy {
 
   getId(url: string):     number { return this.pokemonService.getIdFromUrl(url); }
   getSprite(url: string): string { return this.pokemonService.getSpriteUrl(url); }
+
+  getTipos(url: string):  string[]{
+    const id = this.getId(url);
+    return this.tiposPorId().get(id) ?? [];
+  }
 }

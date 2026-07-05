@@ -12,6 +12,10 @@
     }
   </div>
 </div>
+
+@if (destacado()) {
+  <p class="destacado-info">⭐ Destacado: {{destacado().name}}</p>
+}
  
 <!-- ─── SKELETON LOADER (estado cargando sin datos previos) ─────────── -->
 @if (cargando() && pokemons().length === 0) {
@@ -53,7 +57,7 @@
           [name]="pokemon.name"
           [id]="getId(pokemon.url)"
           [spriteUrl]="getSprite(pokemon.url)"
-          [types]="[]"
+          [types]="getTipos(pokemon.url)"
           [esFavorito]="esFavorito(getId(pokemon.url))"
           (esFavoritoChange)="onFavorito(getId(pokemon.url))"
         ></app-pokemon-card>
