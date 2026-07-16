@@ -21,3 +21,21 @@ $rojo: #CC0000;
     &:hover { background: rgba(255,255,255,.2); }
   }
 }
+
+.contador-fav {
+  margin-left: 1rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: #374151;
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+
+  &.activo {
+    background: #fbbf24;
+    color: #1f2937;
+    transform: scale(1.05);
+  }
+}
+

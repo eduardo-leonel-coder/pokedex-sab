@@ -11,6 +11,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+
 export class PokemonService {
   private http = inject(HttpClient);
 

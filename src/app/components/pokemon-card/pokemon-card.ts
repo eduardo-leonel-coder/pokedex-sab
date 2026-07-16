@@ -50,11 +50,11 @@ export class PokemonCard {
   types = input<string[]>([]);
 
   esFavorito = model<boolean>(false);
-  favorito = output<number>();
+  //favorito = output<number>();
 
-  marcarFavorito(): void {
-    this.favorito.emit(this.id())
-  }
+  // marcarFavorito(): void {
+  //   this.favorito.emit(this.id())
+  // }
 
   alternarFavorito():void {
     this.esFavorito.set(!this.esFavorito())
