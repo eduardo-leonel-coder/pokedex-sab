@@ -57,3 +57,9 @@ export interface PokemonListItem {
   url:  string;
 }
 
+export interface FavoritoPokemon {
+  id: number; 
+  name: string; 
+  spriteUrl: string; 
+  types?: string[]; // esta dato, llega despues en otra peticion.
+}

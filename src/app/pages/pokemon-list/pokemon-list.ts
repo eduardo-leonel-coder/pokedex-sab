@@ -13,6 +13,9 @@ import { PokemonCard }        from '../../components/pokemon-card/pokemon-card';
 import {FavoritosStore} from '../../store/favoritos.store/favoritos.store';
 import { FavoritosReduxStore } from '../../store/favoritos-redux.store/favoritos-redux.store';
 
+import { FavoritosNgrxStore } from '../../store/favoritos-ngrx.store/favoritos-ngrx.store';
+import { FavoritoPokemon } from '../../interfaces/pokemon.interface';
+
 @Component({
   selector:    'app-pokemon-list',
   imports:     [PokemonCard, ReactiveFormsModule],
@@ -25,7 +28,7 @@ export class PokemonList {
   private platformId     = inject(PLATFORM_ID);
   // private sub?: Subscription;
   //readonly favoritosStore = inject(FavoritosStore);
-  readonly favoritosStores = inject(FavoritosReduxStore)
+  readonly favoritosStores = inject(FavoritosNgrxStore)
 
   pokemons     = signal<PokemonListItem[]>([]);
   cargando     = signal(false);
@@ -168,11 +171,21 @@ export class PokemonList {
   //   return this.favoritosStore.esFavorito(id);
   // }
 
-    onFavorito(id:number):void{
-      this.favoritosStores.distpatch({
-        type: '[Favoritos] Alternar', id
-      })
-    }
+    // onFavorito(id:number):void{
+    //   this.favoritosStores.distpatch({
+    //     type: '[Favoritos] Alternar', id
+    //   })
+    // }
+
+  onFavorito(p: PokemonListItem): void{
+    const favorito: FavoritoPokemon = {
+      id: this.getId(p.url),
+      name: p.name,
+      spriteUrl: this.getSprite(p.url),
+    };
+    this.favoritosStores.alternar(favorito)
+  }
+
 
     esFavorito(id:number):boolean{
       return this.favoritosStores.esFavorito(id);

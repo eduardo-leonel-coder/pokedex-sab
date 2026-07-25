@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {FavoritosStore} from '../../store/favoritos.store/favoritos.store';
 import { FavoritosReduxStore } from '../../store/favoritos-redux.store/favoritos-redux.store';
+import { FavoritosNgrxStore } from '../../store/favoritos-ngrx.store/favoritos-ngrx.store';
 
 @Component({
   selector: 'app-navbar',
@@ -11,5 +12,5 @@ import { FavoritosReduxStore } from '../../store/favoritos-redux.store/favoritos
 })
 export class Navbar {
   // readonly favoritosStore = inject(FavoritosStore)
-  readonly favoritosStore = inject(FavoritosReduxStore)
+  readonly favoritosStore = inject(FavoritosNgrxStore)
 }

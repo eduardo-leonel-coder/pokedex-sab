@@ -3,9 +3,13 @@
     <div class="links">
         <a routerLink="/pokemons">Pokemons</a>
         <a routerLink="/registro">Registro</a>
+        <a routerLink="/favoritos" class="contador-fav" 
+        [class.activo]="favoritosStore.hayFavoritos()">
+            ⭐ Favoritos: {{favoritosStore.total()}}
+        </a>
 
         <span class="contador-fav" [class.activo]="favoritosStore.hayFavoritos()">
-                ⭐ {{favoritosStore.total()}}
+                ⭐ total seleccionados: {{favoritosStore.total()}}
         </span>
     </div>
 </nav>
