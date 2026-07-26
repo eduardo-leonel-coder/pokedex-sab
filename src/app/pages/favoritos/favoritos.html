@@ -1,17 +1,17 @@
-<h1>⭐ Mis Favoritos ({{store.total()}})</h1>
+<h1>⭐ Mis Favoritos ({{favoritos.total()}})</h1>
 
-@if (!store.hayFavoritos()){
+@if (!favoritos.hayFavoritos()){
     <p>Aun no tienes favoritos. Ve al Pokedex y marca alguno.</p>
 } @else {
     <div class="grid">
-        @for (p of store.entities(); track p.id) {
+        @for (p of favoritos.lista(); track p.id) {
             <app-pokemon-card
                 [name]="p.name"
                 [id]="p.id"
                 [spriteUrl]="p.spriteUrl"
                 [types]="p.types ?? []"
                 [esFavorito]="true"
-                (esFavoritoChange)="store.alternar(p)"
+                (esFavoritoChange)="favoritos.alternar(p)"
             />
            
         }

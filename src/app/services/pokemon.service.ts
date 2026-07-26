@@ -6,7 +6,7 @@ import {
   PokemonInterface,
   PokemonListResponse,
   PokemonListItem
-} from '../interfaces/pokemon.interface';
+} from '../domain/pokemon.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -8,14 +8,19 @@ export const routes: Routes = [
     },
     {
         path: 'pokemons',
-        loadComponent: () => import('./pages/pokemon-list/pokemon-list')
-            .then(m => m.PokemonList)
+        loadChildren: () => import('./pages/pokemons/pokemons.routes')
+                .then(m => m.pokemonsRoutes)
     },
-    {
-        path: 'pokemons/:name',
-        loadComponent: () => import('./pages/pokemon-detail/pokemon-detail')
-            .then(m => m.PokemonDetail)
-    },
+    // {
+    //     path: 'pokemons',
+    //     loadComponent: () => import('./pages/pokemon-list/pokemon-list')
+    //         .then(m => m.PokemonList)
+    // },
+    // {
+    //     path: 'pokemons/:name',
+    //     loadComponent: () => import('./pages/pokemon-detail/pokemon-detail')
+    //         .then(m => m.PokemonDetail)
+    // },
     {
         path: 'registro',
         loadComponent: () => import('./pages/registro-entrenador/registro-entrenador')

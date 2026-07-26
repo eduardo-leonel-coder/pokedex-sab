@@ -9,7 +9,9 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
+    // RouterMOdule.forRoot(routes)
     provideRouter(routes),
+    //HttpClientModule
     provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
     // provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),

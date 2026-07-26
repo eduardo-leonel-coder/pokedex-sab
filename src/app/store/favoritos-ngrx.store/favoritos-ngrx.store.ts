@@ -1,6 +1,6 @@
 import { computed } from "@angular/core";
 import { signalStore, withState, withComputed, withMethods, patchState, type } from "@ngrx/signals";
-import { FavoritoPokemon } from "../../interfaces/pokemon.interface";
+import { FavoritoPokemon } from "../../domain/pokemon.interface";
 import { withEntities, addEntities, removeEntity, setAllEntities, addEntity, updateEntity} from "@ngrx/signals/entities";
 
 import { inject } from "@angular/core";

@@ -4,12 +4,12 @@
         <a routerLink="/pokemons">Pokemons</a>
         <a routerLink="/registro">Registro</a>
         <a routerLink="/favoritos" class="contador-fav" 
-        [class.activo]="favoritosStore.hayFavoritos()">
-            ⭐ Favoritos: {{favoritosStore.total()}}
+        [class.activo]="favoritos.hayFavoritos()">
+            ⭐ Favoritos: {{favoritos.total()}}
         </a>
 
-        <span class="contador-fav" [class.activo]="favoritosStore.hayFavoritos()">
-                ⭐ total seleccionados: {{favoritosStore.total()}}
+        <span class="contador-fav" [class.activo]="favoritos.hayFavoritos()">
+                ⭐ total seleccionados: {{favoritos.total()}}
         </span>
     </div>
 </nav>

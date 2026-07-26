@@ -1,6 +1,9 @@
 import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
-import { FavoritosNgrxStore } from "../../store/favoritos-ngrx.store/favoritos-ngrx.store";
-import { PokemonCard } from "../../components/pokemon-card/pokemon-card";
+import { FavoritosNgrxStore } from "@store";
+import { PokemonCard } from "@components/pokemon-card/pokemon-card";
+import { pattern } from "@angular/forms/signals";
+import {FavoritosFacade} from "@store";
+import { FavoritosReduxStore } from "@store";
 
 @Component({
     selector: 'app-favoritos', 
@@ -10,5 +13,7 @@ import { PokemonCard } from "../../components/pokemon-card/pokemon-card";
 })
 
 export class Favoritos {
-    readonly store = inject(FavoritosNgrxStore);
+    // readonly store = inject(FavoritosNgrxStore);
+    readonly favoritos = inject(FavoritosFacade);
+    // readonly store = inject(FavoritosReduxStore);
 }

@@ -1,20 +1,26 @@
 import {
   Component,
   inject, signal, computed, linkedSignal, PLATFORM_ID
-} from '@angular/core';
+} from '@angular/core'; 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { isPlatformBrowser }  from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { debounce, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 // import { Subscription }       from 'rxjs';
-import { PokemonService }     from '../../services/pokemon.service';
-import { PokemonListItem }    from '../../interfaces/pokemon.interface';
-import { PokemonCard }        from '../../components/pokemon-card/pokemon-card';
+// import { PokemonService }     from '../../services/pokemon.service';
+import { PokemonService }     from '@services/pokemon.service';
+// import { PokemonListItem }    from '../../interfaces/pokemon.interface';
+import { PokemonListItem }    from 'src/app/domain/pokemon.interface';
+// import { PokemonCard }        from '../../components/pokemon-card/pokemon-card';
+import { PokemonCard }        from '@components/pokemon-card/pokemon-card';
+
 import {FavoritosStore} from '../../store/favoritos.store/favoritos.store';
 import { FavoritosReduxStore } from '../../store/favoritos-redux.store/favoritos-redux.store';
 
 import { FavoritosNgrxStore } from '../../store/favoritos-ngrx.store/favoritos-ngrx.store';
-import { FavoritoPokemon } from '../../interfaces/pokemon.interface';
+import { FavoritoPokemon } from '../../domain/pokemon.interface';
+
+import {FavoritosFacade} from "@store"
 
 @Component({
   selector:    'app-pokemon-list',
@@ -28,7 +34,8 @@ export class PokemonList {
   private platformId     = inject(PLATFORM_ID);
   // private sub?: Subscription;
   //readonly favoritosStore = inject(FavoritosStore);
-  readonly favoritosStores = inject(FavoritosNgrxStore)
+  // readonly favoritosStores = inject(FavoritosNgrxStore)
+  readonly favoritos = inject(FavoritosFacade)
 
   pokemons     = signal<PokemonListItem[]>([]);
   cargando     = signal(false);
@@ -183,12 +190,12 @@ export class PokemonList {
       name: p.name,
       spriteUrl: this.getSprite(p.url),
     };
-    this.favoritosStores.alternar(favorito)
+    this.favoritos.alternar(favorito)
   }
 
 
     esFavorito(id:number):boolean{
-      return this.favoritosStores.esFavorito(id);
+      return this.favoritos.esFavorito(id);
     }
 
   getId(url: string):     number { return this.pokemonService.getIdFromUrl(url); }

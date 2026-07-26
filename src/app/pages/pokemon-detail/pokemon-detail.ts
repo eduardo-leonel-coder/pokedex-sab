@@ -6,7 +6,7 @@ import { isPlatformBrowser }  from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { PokemonService }         from '../../services/pokemon.service';
-import { PokemonInterface }                from '../../interfaces/pokemon.interface';
+import { PokemonInterface }                from '../../domain/pokemon.interface';
 import {
   trigger,
   transition,
