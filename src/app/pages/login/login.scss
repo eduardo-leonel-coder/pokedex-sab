@@ -1,0 +1,104 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 1rem;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eef0f4;
+
+  h2 {
+    margin: 0 0 1.75rem;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+
+    label {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4a4a5e;
+    }
+
+    input {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.95rem;
+      border: 1.5px solid #e0e3eb;
+      border-radius: 10px;
+      background: #f8f9fc;
+      color: #1a1a2e;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+      &::placeholder {
+        color: #a5a9b8;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #6c63ff;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+      }
+    }
+  }
+
+  .error-msg {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    color: #e63946;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: #6c63ff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+
+    &:hover:not(:disabled) {
+      background: #574fd6;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      background: #c4c2e8;
+      cursor: not-allowed;
+    }
+  }
+
+  .hint {
+    margin: 1.25rem 0 0;
+    padding: 0.7rem;
+    font-size: 0.78rem;
+    text-align: center;
+    color: #6a6f80;
+    background: #f0f1f7;
+    border-radius: 8px;
+    line-height: 1.4;
+  }
+}

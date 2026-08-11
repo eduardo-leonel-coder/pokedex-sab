@@ -1,0 +1,47 @@
+<div class="login-container">
+
+    <h2>Iniciar sesion</h2>
+
+    <div class="campo">
+        <label for="email">Email</label>
+        <input type="email"
+        id="email"
+        [formField]="loginForm.email"
+        placeholder="ash@pokemon.com"
+        >
+        @if (loginForm.email().touched() &&
+            loginForm.email().errors().length){
+                <span class="error-msg">
+                    {{loginForm.email().errors()[0].message}}
+                </span>
+            }
+    </div>
+
+    <div class="campo">
+        <label for="password">Password</label>
+
+        <input 
+        type="password"
+        id="password"
+        [formField]="loginForm.password"
+        placeholder="********">
+
+        @if (loginForm.password().touched() &&
+            loginForm.password().errors().length){
+                <span class="error-msg">
+                    {{loginForm.password().errors()[0].message}}
+                </span>
+            }
+    </div>
+
+    <button
+    type="button"
+    (click)="onSubmit()"
+    [disabled]="loginForm().invalid()"
+    >Entrar</button>
+
+    <p class="hint">
+        prueba: admin&#64;agravity.dev para rol admin,
+        o cualquier otro para trainer
+    </p>
+</div>

@@ -30,5 +30,10 @@ export const routes: Routes = [
         path: 'favoritos',
         loadComponent: () => import('./pages/favoritos/favoritos')
             .then(m => m.Favoritos)
+    },
+    {
+        path: 'login',
+        loadComponent: () => import ('./pages/login/login')
+            .then(m=> m.Login),
     }, 
 ];
