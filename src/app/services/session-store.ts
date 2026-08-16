@@ -39,6 +39,30 @@ export class SessionStore {
     localStorage.removeItem('token');
   }
 
+  refrescarTokenMock(): string | null {
+    const usuarioActual = this._usuario();
+    if (!usuarioActual){
+      return null;
+    }
+
+    const header = btoa(JSON.stringify({alg:'HS256', typ: 'JWT'}))
+    const payload = btoa(JSON.stringify({
+      sub: usuarioActual.sub,
+      name: usuarioActual.name,
+      role: usuarioActual.role,
+      exp: Math.floor(Date.now() / 1000) + 3600,
+    }));
+    const nuevoToken = `${header}.${payload}.firma-falsa-mock`;
+
+    this._token.set(nuevoToken);
+    localStorage.setItem('token', nuevoToken)
+    
+    return nuevoToken;
+  }
+
+
+// ******
+
   private decodificarPayload(token: string): Usuario {
     const payload = token.split('.')[1];
     return JSON.parse(atob(payload));

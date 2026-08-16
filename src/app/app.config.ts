@@ -3,8 +3,12 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { errorHandlerInterceptor } from './interceptors/error-handler-interceptor';
+
 import { routes } from './app.routes';
+
+import { errorHandlerInterceptor } from './interceptors/error-handler-interceptor';
+import { authInterceptor } from './interceptors/auth-interceptor';
+import { refreshInterceptor } from './interceptors/refresh-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +16,9 @@ export const appConfig: ApplicationConfig = {
     // RouterMOdule.forRoot(routes)
     provideRouter(routes),
     //HttpClientModule
-    provideHttpClient(withFetch(), withInterceptors([errorHandlerInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor, errorHandlerInterceptor, refreshInterceptor])),
     // provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
   ]

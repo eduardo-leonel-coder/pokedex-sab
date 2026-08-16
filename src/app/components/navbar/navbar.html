@@ -3,6 +3,7 @@
     <div class="links">
         <a routerLink="/pokemons">Pokemons</a>
         <a routerLink="/registro">Registro</a>
+        <a *hasRole="'admin'" routerLink="/favoritos">🛠️ Panel Admin</a>
         <a routerLink="/favoritos" class="contador-fav" 
         [class.activo]="favoritos.hayFavoritos()">
             ⭐ Favoritos: {{favoritos.total()}}

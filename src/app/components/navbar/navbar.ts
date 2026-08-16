@@ -4,10 +4,11 @@ import {FavoritosStore} from '../../store/favoritos.store/favoritos.store';
 import { FavoritosReduxStore } from '../../store/favoritos-redux.store/favoritos-redux.store';
 import { FavoritosNgrxStore } from '../../store/favoritos-ngrx.store/favoritos-ngrx.store';
 import { FavoritosFacade} from '@store'
+import { HasRole } from '../../directives/has-role';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, HasRole],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
