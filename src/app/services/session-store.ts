@@ -1,4 +1,5 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed,inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 interface Usuario{
   sub: string; 
@@ -11,6 +12,9 @@ interface Usuario{
 })
 
 export class SessionStore {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly esNavegador = isPlatformBrowser(this.platformId);
+
   private readonly _token = signal<string | null>(null);
   private readonly _usuario = signal<Usuario | null>(null);
 
@@ -29,14 +33,18 @@ export class SessionStore {
     this._token.set(token);
     this._usuario.set(this.decodificarPayload(token));
 
-    localStorage.setItem('token', token);
+    if (this.esNavegador){
+      localStorage.setItem('token', token);
+    }
   }
 
   logout(): void {
     this._token.set(null);
     this._usuario.set(null);
 
-    localStorage.removeItem('token');
+    if(this.esNavegador){
+      localStorage.removeItem('token');
+    }
   }
 
   refrescarTokenMock(): string | null {
@@ -55,7 +63,9 @@ export class SessionStore {
     const nuevoToken = `${header}.${payload}.firma-falsa-mock`;
 
     this._token.set(nuevoToken);
-    localStorage.setItem('token', nuevoToken)
+    if (this.esNavegador){
+      localStorage.setItem('token', nuevoToken)
+    }
     
     return nuevoToken;
   }
@@ -69,6 +79,7 @@ export class SessionStore {
   }
 
   private restaurarSesion(): void {
+    if (!this.esNavegador) return; 
     const token = localStorage.getItem('token');
     if (token){
       this._token.set(token);
