@@ -12,5 +12,12 @@
         <span class="contador-fav" [class.activo]="favoritos.hayFavoritos()">
                 ⭐ total seleccionados: {{favoritos.total()}}
         </span>
+
+        <!-- Verificando si el usuario tiene sesion abierta para mostrar el boton de cerrar sesion. -->
+        @if (estaAutenticado()) {
+            <button type="button" class="btn-logout" (click)="logOut()">
+                Cerrar Sesion
+            </button>
+        }
     </div>
 </nav>
