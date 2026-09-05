@@ -20,6 +20,7 @@
       "@domain/*": ["src/app/domain/*"],
       "@domain": ["src/app/domain"],
       "@components/*": ["src/app/components/*"],
+      "@interceptors/*": ["src/app/interceptors/*"],
       "@directives/*": ["src/app/directives/*"],
       "@store": ["src/app/store/index.ts"],
       "@store/*": ["src/app/store/*"],

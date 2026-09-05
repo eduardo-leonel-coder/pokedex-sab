@@ -6,9 +6,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { routes } from './app.routes';
 
-import { errorHandlerInterceptor } from './interceptors/error-handler-interceptor';
-import { authInterceptor } from './interceptors/auth-interceptor';
-import { refreshInterceptor } from './interceptors/refresh-interceptor';
+import { errorHandlerInterceptor } from '@interceptors/error-handler-interceptor';
+import { authInterceptor } from '@interceptors/auth-interceptor';
+import { refreshInterceptor } from '@interceptors/refresh-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
