@@ -1,5 +1,10 @@
 # Pokedex
 
+> [!IMPORTANT]
+> Se modifico la carpeta navbar con los archivos: navbar.ts para la logica de mostrar el boton cerrar sesion si hay sesion activa,
+> navbar.html para la visibilidad del boton en el frontend
+> y navbar.css para el estilo uniforme del boton de cerrar sesion.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
 
 ## Development server
